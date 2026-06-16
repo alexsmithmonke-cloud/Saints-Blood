@@ -60,7 +60,7 @@ function SWEP:CheckingBlood(ent,ply)
             ply:ChatPrint("Blood analysis interrupted")
         end
     end)
-    local TimeNeededToPass = 10
+    local TimeNeededToPass = 1
     local TimePassed = 1
     ply:ChatPrint("----------------\nINITIALIZING")
     timer.Create(nameToPassTime, 1, TimeNeededToPass, function()

@@ -2,6 +2,7 @@
 SaintsBloodTypes = {
     {
         name = "O-", -- blood type name
+        bloodtype = "O",
         weight = 1, -- Chance to attain this blood type, RHFactor Negitive is rarer, O- is the rarest.
         antibody = "None", -- Means it doesn't give to those types
         antigens = "None", -- Means it takes from those types
@@ -9,6 +10,7 @@ SaintsBloodTypes = {
     },
     {
         name = "O+",
+        bloodtype = "O",
         weight = 29,
         antibody = "None",
         antigens = "None",
@@ -16,6 +18,7 @@ SaintsBloodTypes = {
     },
     {
         name = "A+",
+        bloodtype = "A",
         weight = 21,
         antibody = "B",
         antigens = "A",
@@ -23,6 +26,7 @@ SaintsBloodTypes = {
     },
     {
         name = "A-",
+        bloodtype = "A",
         weight = 7,
         antibody = "B",
         antigens = "A",
@@ -30,6 +34,7 @@ SaintsBloodTypes = {
     },
     {
         name = "B+",
+        bloodtype = "B",
         weight = 21,
         antibody = "A",
         antigens = "B",
@@ -37,6 +42,7 @@ SaintsBloodTypes = {
     },
     {
         name = "B-",
+        bloodtype = "B",
         weight = 7,
         antibody = "A",
         antigens = "B",
@@ -44,17 +50,36 @@ SaintsBloodTypes = {
     },
     {
         name = "AB+",
+        bloodtype = "AB",
         weight = 21,
-        antibody = "None",
+        antibody = "All",
         antigens = "All",
         RHFactor = false 
     },
     {
         name = "AB-",
+        bloodtype = "AB",
         weight = 7,
-        antibody = "None",
+        antibody = "All",
         antigens = "All",
         RHFactor = true 
     },
     
 }
+
+concommand.Add("ResetSaintsBlood", function(ply)
+
+    local id = ply:EntIndex()
+    local nameToBloodTransferCheck = id.."ToBloodTransferCheck"
+    local nameToBloodTransfer = id.."ToBloodTransfer"
+    timer.Remove(nameToBloodTransferCheck)
+    timer.Remove(nameToBloodTransfer)
+
+    ply.GettingOrGivingBlood = nil
+    ply.HasBloodTransfuer = false
+    ply.IsInTransfusion = false
+
+    net.Start("ToConveyBloodTransfusion")
+    net.Broadcast()
+
+end)
