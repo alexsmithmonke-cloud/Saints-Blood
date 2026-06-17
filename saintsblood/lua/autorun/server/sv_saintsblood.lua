@@ -89,11 +89,13 @@ function EffectsOfBloodTransfer(Donate, Receive)
         local ReceiveBlood = Receive.sbloodtype
         local compatible
 
-        if ReceiveBlood.name == DonateBlood.name then compatible = true 
-        elseif ReceiveBlood.bloodtype == DonateBlood.bloodtype and not DonateBlood.RHFactor then compatible = true 
-        elseif not ReceiveBlood.bloodtype == DonateBlood.antibody or not DonateBlood.antibody == "All" then compatible = true 
-        elseif ReceiveBlood.antigens == "All" and not ReceiveBlood.RHFactor then compatible = true 
-        elseif ReceiveBlood.antigens == "All" and ReceiveBlood.RHFactor == DonateBlood.RHFactor then compatible = true 
+        if ReceiveBlood.name == DonateBlood.name then compatible = true -- Check if they are the same blood
+        elseif DonateBlood.bloodtype == "O" and DonateBlood.RHFactor then compatible = true -- Checks if the Dono is univerisal O-
+        elseif DonateBlood.name == "O+" and not ReceiveBlood.RHFactor then compatible = true -- Checks if the Dono is univerisal O+
+        elseif ReceiveBlood.bloodtype == DonateBlood.bloodtype and not DonateBlood.RHFactor then compatible = true -- Checks if they are the same bloodtype but donor is RH- and Receiver is RH+
+        elseif not ReceiveBlood.bloodtype == DonateBlood.antibody or not DonateBlood.antibody == "All" then compatible = true -- Makes sure A cannot give to B and that it is not AB giving blood.
+        elseif ReceiveBlood.antigens == "All" and not ReceiveBlood.RHFactor then compatible = true -- Checks if it is AB+ so it can take from everything positive.
+        elseif ReceiveBlood.antigens == "All" and ReceiveBlood.RHFactor == DonateBlood.RHFactor then compatible = true -- Checks if it is AB- so it can take from everyone.
         end
         
         if compatible then
